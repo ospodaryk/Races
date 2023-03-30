@@ -1,0 +1,30 @@
+2023-03-30T09:26:09.688+03:00  INFO 18265 --- [main] com.project.races.RacesApplication       : Starting RacesApplication using Java 18.0.2.1 with PID 18265 (/Users/oksanaspodarik/Documents/Races/target/classes started by oksanaspodarik in /Users/oksanaspodarik/Documents/Races)
+2023-03-30T09:26:09.691+03:00  INFO 18265 --- [main] com.project.races.RacesApplication       : No active profile set, falling back to 1 default profile: "default"
+2023-03-30T09:26:10.556+03:00  INFO 18265 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-03-30T09:26:10.587+03:00  INFO 18265 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 JPA repository interfaces.
+2023-03-30T09:26:11.341+03:00  INFO 18265 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-03-30T09:26:11.356+03:00  INFO 18265 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-03-30T09:26:11.356+03:00  INFO 18265 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.7]
+2023-03-30T09:26:11.467+03:00  INFO 18265 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-03-30T09:26:11.468+03:00  INFO 18265 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1699 ms
+2023-03-30T09:26:11.671+03:00  INFO 18265 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-03-30T09:26:11.747+03:00  INFO 18265 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-03-30T09:26:12.141+03:00  INFO 18265 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-03-30T09:26:12.478+03:00  INFO 18265 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./races user=
+2023-03-30T09:26:12.481+03:00  INFO 18265 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-03-30T09:26:12.535+03:00  INFO 18265 --- [main] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2023-03-30T09:26:13.757+03:00  INFO 18265 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-03-30T09:26:13.770+03:00  INFO 18265 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-03-30T09:26:13.833+03:00  WARN 18265 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-03-30T09:26:14.312+03:00  WARN 18265 --- [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 043537a4-ad5e-4d4d-9091-f8008fc5527f
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-03-30T09:26:14.476+03:00  INFO 18265 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1a712f12, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@62525dd3, org.springframework.security.web.context.SecurityContextHolderFilter@5d01a2eb, org.springframework.security.web.header.HeaderWriterFilter@1c25deb0, org.springframework.security.web.csrf.CsrfFilter@7c4a5ef2, org.springframework.security.web.authentication.logout.LogoutFilter@7730da00, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@2b4ba2d9, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@34001c5d, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@56adbb07, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@cce92b5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7d60bd5a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1d2d793d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7be6dabb, org.springframework.security.web.access.ExceptionTranslationFilter@58e4aa67, org.springframework.security.web.access.intercept.AuthorizationFilter@322eb1a]
+2023-03-30T09:26:14.555+03:00  INFO 18265 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-03-30T09:26:14.572+03:00  INFO 18265 --- [main] com.project.races.RacesApplication       : Started RacesApplication in 5.508 seconds (process running for 6.324)
+2023-03-30T09:26:29.888+03:00  INFO 18265 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-03-30T09:26:29.891+03:00  INFO 18265 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-03-30T09:26:29.893+03:00  INFO 18265 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
