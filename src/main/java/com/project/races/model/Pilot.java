@@ -1,9 +1,7 @@
 package com.project.races.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-
-import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +26,10 @@ public class Pilot {
     @NotBlank
     @Column(name = "number")
     private Integer number;
+
+    @NotBlank
+    @Column(name = "score")
+    private Integer score;
 
     @NotBlank
     @Column(name = "country")

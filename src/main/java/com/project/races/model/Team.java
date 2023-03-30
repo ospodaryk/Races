@@ -25,6 +25,10 @@ public class Team {
     @Column(name = "number")
     private Integer number;
 
+    @NotBlank
+    @Column(name = "score")
+    private Integer score;
+
     @OneToMany(mappedBy = "team", cascade = CascadeType.REMOVE)
     private List<Pilot> pilots;
 
