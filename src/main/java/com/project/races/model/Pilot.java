@@ -2,11 +2,14 @@ package com.project.races.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "Pilot")
 @Table(name = "pilot")
 public class Pilot {
@@ -25,11 +28,11 @@ public class Pilot {
 
     @NotBlank
     @Column(name = "number")
-    private Integer number;
+    private Long number;
 
     @NotBlank
     @Column(name = "score")
-    private Integer score;
+    private Long score;
 
     @NotBlank
     @Column(name = "country")

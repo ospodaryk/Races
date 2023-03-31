@@ -2,14 +2,18 @@ package com.project.races.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@RequiredArgsConstructor
+
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "Race")
 @Table(name = "race")
 
@@ -34,13 +38,13 @@ public class Race {
 
     @NotBlank
     @Column(name = "numberOfLaps")
-    private Integer numberOfLaps;
+    private Long numberOfLaps;
 
     @NotBlank
     @Column(name = "dateOfStart")
-    private LocalDateTime dateOfStart;
+    private String dateOfStart;
 
-    @OneToMany(mappedBy = "race", cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "race", cascade = CascadeType.REMOVE)
     private List<Team> teams;
 
 }
