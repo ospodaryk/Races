@@ -12,12 +12,12 @@ public class KafkaProducer {
     private static final Logger logger = LoggerFactory.getLogger(KafkaProducer.class);
 
     @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private KafkaTemplate<String, MyMessage> kafkaTemplate;
 
     @Value("${kafka.topic.name}")
     private String topicName;
 
-    public void sendMessage(String message) {
+    public void sendMessage(MyMessage message) {
         logger.info("____SEND" + message);
         kafkaTemplate.send(topicName, message);
     }

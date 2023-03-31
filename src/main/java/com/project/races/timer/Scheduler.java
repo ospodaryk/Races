@@ -17,6 +17,6 @@ public class Scheduler {
     public void scheduleTask() {
         logger.info("________________Scheduler");
         System.out.println("________________Scheduler");
-        kafkaProducer.sendMessage("Hello, Kafka!");
+        kafkaProducer.sendMessage(new MyMessage("1","jejej"));
     }
 }
