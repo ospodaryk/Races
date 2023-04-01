@@ -33,7 +33,7 @@ public class Team {
 
 
     @ManyToMany
-    @JoinColumn(name = "race")
+    @JoinColumn(name = "races")
     private List<Race> races;
 
 }

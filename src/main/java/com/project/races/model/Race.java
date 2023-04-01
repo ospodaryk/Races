@@ -44,7 +44,7 @@ public class Race {
     @Column(name = "dateOfStart")
     private String dateOfStart;
 
-    @ManyToMany(mappedBy = "race", cascade = CascadeType.REMOVE)
+    @ManyToMany
     private List<Team> teams;
 
 }

@@ -1,6 +1,5 @@
 package com.project.races.service.implementation;
 
-import com.project.races.exception.NullEntityReferenceException;
 import com.project.races.model.Race;
 import com.project.races.repository.RaceRepository;
 import com.project.races.service.RaceService;
@@ -29,7 +28,7 @@ public class RaceServiceImpl implements RaceService {
             return raceRepository.save(recipe);
         }
         logger.error("Recipe  cannot 'null'");
-        throw new NullEntityReferenceException("Recipe cannot be 'null'");
+        return null;
     }
 
 
@@ -66,7 +65,7 @@ public class RaceServiceImpl implements RaceService {
             return raceRepository.save(recipe);
         }
         logger.error("Recipe to update cannot be 'null'");
-        throw new NullEntityReferenceException("Recipe to update cannot be 'null'");
+        return null;
     }
 
     @Override

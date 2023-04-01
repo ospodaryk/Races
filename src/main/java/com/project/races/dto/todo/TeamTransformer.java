@@ -16,21 +16,23 @@ public class TeamTransformer {
     private static final Logger logger = LoggerFactory.getLogger(TeamTransformer.class);
 
     private final ModelMapper modelMapper;
-    private final RaceService userService;
 
-    public TeamTransformer(ModelMapper modelMapper, RaceService userService) {
+    public TeamTransformer(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
-        this.userService = userService;
     }
 
     public Team convertTeamRequestToTeam(TeamRequest teamRequest) {
-
-        return modelMapper.map(teamRequest, Team.class);
+        Team team = new Team();
+        team.setName(teamRequest.getName());
+        team.setPilots(new ArrayList<>());
+        team.setRaces(new ArrayList<>());
+        team.setScore(0L);
+        return team;
     }
 
     public TeamResponse convertTeamToTeamResponse(Team team) {
         TeamResponse teamResponse = modelMapper.map(team, TeamResponse.class);
-        teamResponse.setRaces(team.getRaces().stream().map(obj -> obj.getId()).collect(Collectors.toList()));
+        teamResponse.setRaces(team.getRaces().stream().map(ob -> ob.getId()).collect(Collectors.toList()));
         return teamResponse;
     }
 

@@ -1,6 +1,5 @@
 package com.project.races.service.implementation;
 
-import com.project.races.exception.NullEntityReferenceException;
 import com.project.races.model.Pilot;
 import com.project.races.repository.PilotRepository;
 import com.project.races.service.PilotService;
@@ -29,7 +28,7 @@ public class PilotServiceImpl implements PilotService {
             return pilotRepository.save(recipe);
         }
         logger.error("Recipe  cannot 'null'");
-        throw new NullEntityReferenceException("Recipe cannot be 'null'");
+        return null;
     }
 
 
@@ -79,7 +78,7 @@ public class PilotServiceImpl implements PilotService {
             return pilotRepository.save(recipe);
         }
         logger.error("Recipe to update cannot be 'null'");
-        throw new NullEntityReferenceException("Recipe to update cannot be 'null'");
+        return null;
     }
 
     @Override

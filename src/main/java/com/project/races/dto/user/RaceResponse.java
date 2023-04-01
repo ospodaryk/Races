@@ -23,5 +23,5 @@ public class RaceResponse {
 
     private String dateOfStart;
 
-    private List<Integer> teamsID;
+    private List<Long> teamsID;
 }

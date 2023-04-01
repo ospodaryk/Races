@@ -17,9 +17,7 @@ import java.util.List;
 public class TeamResponse {
     private Long id = 0L;
     private String name;
-
     private Long score;
     private List<Long> pilots;
-
     private List<Long> races;
 }
