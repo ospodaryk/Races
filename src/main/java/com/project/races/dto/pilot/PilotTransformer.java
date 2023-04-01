@@ -19,13 +19,23 @@ public class PilotTransformer {
         logger.info("convertRecipeRequestToRecipe");
         Pilot pilot=modelMapper.map(pilotRequest, Pilot.class);
         pilot.setTeam(team);
+        pilot.setScore(0L);
         return pilot;
     }
 
 
     public  PilotResponse convertPilotToPilotResponse(Pilot pilot) {
         logger.info("convertToRecipeResponse");
-        return  modelMapper.map(pilot, PilotResponse.class);
+        PilotResponse pilotResponse=new PilotResponse();
+        pilotResponse.setId(pilot.getId());
+        pilotResponse.setNumber(pilot.getNumber());
+        pilotResponse.setCountry(pilot.getCountry());
+        pilotResponse.setName(pilot.getName());
+        pilotResponse.setSurname(pilot.getSurname());
+        pilotResponse.setTeamID(pilot.getTeam().getId());
+        pilotResponse.setScore(pilot.getScore());
+
+        return  pilotResponse;
     }
 
 }

@@ -26,11 +26,11 @@ public class Pilot {
     @Column(name = "surname")
     private String surname;
 
-    @NotBlank
+//    @NotBlank
     @Column(name = "number")
     private Long number;
 
-    @NotBlank
+//    @NotBlank
     @Column(name = "score")
     private Long score;
 

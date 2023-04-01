@@ -4,6 +4,7 @@ import com.project.races.dto.pilot.PilotRequest;
 import com.project.races.dto.pilot.PilotResponse;
 import com.project.races.dto.pilot.PilotTransformer;
 import com.project.races.model.Pilot;
+import com.project.races.model.Race;
 import com.project.races.model.Team;
 import com.project.races.service.TeamService;
 import org.slf4j.Logger;
@@ -35,16 +36,27 @@ public class PilotController {
     }
 
     @GetMapping
-    public List<PilotResponse> getAllPilots(@PathVariable("team_id") long team_id) {
+    public List<PilotResponse> getAllPilots() {
         logger.info("@Get: getTasks()");
+
         return pilotService.getAll().stream()
                 .map(pilotTransformer::convertPilotToPilotResponse)
                 .collect(Collectors.toList());
     }
 
+//    @GetMapping
+//    public List<Pilot> getAllPilots(@PathVariable("team_id") long team_id) {
+//        logger.info("@Get: getTasks()");
+//                return pilotService.getAll();
+//
+////        return pilotService.getAll().stream()
+////                .map(pilotTransformer::convertPilotToPilotResponse)
+////                .collect(Collectors.toList());
+//    }
 
-    @DeleteMapping("/todos/{todo_id}/tasks/{task_id}/delete")
-    public void delete(@PathVariable("todo_id") long todoId,
+
+    @DeleteMapping("{task_id}/delete")
+    public void delete(
                        @PathVariable("task_id") long taskId) {
         pilotService.delete(taskId);
         logger.info("@Delete: deleteToDo(), id=" + taskId);
