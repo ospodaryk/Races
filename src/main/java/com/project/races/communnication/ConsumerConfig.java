@@ -1,6 +1,7 @@
 package com.project.races.communnication;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.project.races.model.Race;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -35,19 +36,19 @@ public class ConsumerConfig {
         return props;
     }
     @Bean
-    public ConsumerFactory<String, MyMessage> consumerFactory() {
+    public ConsumerFactory<String, Race> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(org.apache.kafka.clients.consumer.ConsumerConfig.GROUP_ID_CONFIG, "my-group");
         props.put(org.apache.kafka.clients.consumer.ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(org.apache.kafka.clients.consumer.ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
-                new JsonDeserializer<>(MyMessage.class));
+                new JsonDeserializer<>(Race.class));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, MyMessage> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, MyMessage> factory =
+    public ConcurrentKafkaListenerContainerFactory<String, Race> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, Race> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;

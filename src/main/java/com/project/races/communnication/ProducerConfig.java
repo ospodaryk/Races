@@ -1,4 +1,5 @@
 package com.project.races.communnication;
+import com.project.races.model.Race;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,17 +17,9 @@ public class ProducerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
-//    @Bean
-//    public Map<String, MyMessage> producerConfigs() {
-//        Map<String, MyMessage> props = new HashMap<>();
-//        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-//        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-//        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-//        return props;
-//    }
 
     @Bean
-    public ProducerFactory<String, MyMessage> producerFactory() {
+    public ProducerFactory<String, Race> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -36,7 +29,7 @@ public class ProducerConfig {
 
 
     @Bean
-    public KafkaTemplate<String, MyMessage> kafkaTemplate() {
+    public KafkaTemplate<String, Race> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }
