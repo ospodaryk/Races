@@ -1,8 +1,8 @@
 package com.project.races.controller;
 
-import com.project.races.dto.user.RaceRequest;
-import com.project.races.dto.user.RaceResponse;
-import com.project.races.dto.user.RaceTransformer;
+import com.project.races.dto.race.RaceRequest;
+import com.project.races.dto.race.RaceResponse;
+import com.project.races.dto.race.RaceTransformer;
 import com.project.races.service.RaceService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;

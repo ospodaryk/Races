@@ -22,7 +22,7 @@ public class Race {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id = 0L;
+    private Long id;
 
     @NotBlank
     @Column(name = "name")
@@ -36,11 +36,9 @@ public class Race {
     @Column(name = "trackName")
     private String trackName;
 
-    @NotBlank
     @Column(name = "numberOfLaps")
     private Long numberOfLaps;
 
-    @NotBlank
     @Column(name = "dateOfStart")
     private String dateOfStart;
 

@@ -1,11 +1,6 @@
-package com.project.races.dto.user;
+package com.project.races.dto.race;
 
-import com.project.races.model.Team;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 @Data
