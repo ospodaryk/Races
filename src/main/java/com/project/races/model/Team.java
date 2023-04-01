@@ -24,7 +24,7 @@ public class Team {
     @Column(name = "name")
     private String name;
 
-    @NotBlank
+//    @NotBlank
     @Column(name = "score")
     private Long score;
 
