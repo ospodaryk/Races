@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -43,8 +44,8 @@ public class Race {
     @Column(name = "dateOfStart")
     private String dateOfStart;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Team> teams;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "races")
+    private List<Team> teams=new ArrayList<>();
 
 
 

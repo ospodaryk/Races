@@ -2,11 +2,14 @@ package com.project.races.service;
 
 
 import com.project.races.model.Pilot;
+import com.project.races.model.Race;
 import com.project.races.model.Team;
 
 import java.util.List;
 
 public interface TeamService {
+
+    void create(Team team, Race race);
 
     Team create(Team race);
 

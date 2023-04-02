@@ -1,5 +1,6 @@
 package com.project.races.dto.todo;
 
+import com.project.races.model.Race;
 import com.project.races.model.Team;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -18,10 +19,8 @@ public class TeamTransformer {
     }
 
     public Team convertTeamRequestToTeam(TeamRequest teamRequest) {
-        Team team = new Team();
+        Team team = modelMapper.map(teamRequest, Team.class);
         team.setName(teamRequest.getName());
-        team.setPilots(new ArrayList<>());
-        team.setRaces(new ArrayList<>());
         team.setScore(0L);
         return team;
     }

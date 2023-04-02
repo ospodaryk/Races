@@ -5,6 +5,7 @@ import com.project.races.dto.todo.TeamRequest;
 import com.project.races.dto.todo.TeamResponse;
 import com.project.races.dto.todo.TeamTransformer;
 import com.project.races.model.Pilot;
+import com.project.races.model.Race;
 import com.project.races.model.Team;
 import com.project.races.service.RaceService;
 import com.project.races.service.TeamService;
@@ -37,15 +38,24 @@ public class TeamController {
     @GetMapping
     List<TeamResponse> getAllTeams() {
         logger.info("@Get: getAllToDO()");
-        return teamService.getAll().stream()
-                .map(teamTransformer::convertTeamToTeamResponse)
-                .collect(Collectors.toList());
+        return teamService.getAll().stream().map(teamTransformer::convertTeamToTeamResponse).collect(Collectors.toList());
     }
 
 
     @PostMapping("/create/team/{race_id}")
     public ResponseEntity<HttpStatus> create(@PathVariable("race_id") long race_id, @RequestBody TeamRequest teamRequest, BindingResult bindingResult) {
-        teamService.create(teamTransformer.convertTeamRequestToTeam(teamRequest));
+        if (teamRequest == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Team team = teamTransformer.convertTeamRequestToTeam(teamRequest);
+        Race race = raceService.getById(race_id);
+
+        if (race == null) {
+            return ResponseEntity.notFound().build();
+        }
+        teamService.create(team,race);
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
+
 }

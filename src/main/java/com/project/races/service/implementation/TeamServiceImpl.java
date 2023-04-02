@@ -1,8 +1,11 @@
 package com.project.races.service.implementation;
 
 import com.project.races.model.Pilot;
+import com.project.races.model.Race;
 import com.project.races.model.Team;
+import com.project.races.repository.RaceRepository;
 import com.project.races.repository.TeamRepository;
+import com.project.races.service.RaceService;
 import com.project.races.service.TeamService;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -14,11 +17,16 @@ import java.util.List;
 @Service
 public class TeamServiceImpl implements TeamService {
     private final TeamRepository teamRepository;
+    private final RaceService raceService;
 
     private static final Logger logger = LoggerFactory.getLogger(TeamServiceImpl.class);
+    private final RaceRepository raceRepository;
 
-    public TeamServiceImpl(TeamRepository teamRepository) {
+    public TeamServiceImpl(TeamRepository teamRepository, RaceService raceService,
+                           RaceRepository raceRepository) {
         this.teamRepository = teamRepository;
+        this.raceService = raceService;
+        this.raceRepository = raceRepository;
     }
 
     @Override
@@ -31,6 +39,11 @@ public class TeamServiceImpl implements TeamService {
         return null;
     }
 
+    @Override
+    public void create(Team team, Race race) {
+        team.getRaces().add(race);
+        teamRepository.save(team);
+    }
 
     @Override
     public void deleteAll() {

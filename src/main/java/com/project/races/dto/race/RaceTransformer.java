@@ -16,12 +16,11 @@ public class RaceTransformer {
 
     public Race convertRaceRequestToRace(RaceRequest raceRequest) {
         Race race = modelMapper.map(raceRequest, Race.class);
-        race.setTeams(new ArrayList<>());
         return race;
     }
 
     public RaceResponse convertToRaceResponse(Race race) {
-        RaceResponse raceResponse = new RaceResponse();
+        RaceResponse raceResponse =modelMapper.map(race, RaceResponse.class);
         raceResponse.setId(race.getId());
         raceResponse.setName(race.getName());
         raceResponse.setStadium(race.getStadium());

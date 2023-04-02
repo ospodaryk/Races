@@ -1,6 +1,7 @@
 package com.project.races.service.implementation;
 
 import com.project.races.model.Race;
+import com.project.races.model.Team;
 import com.project.races.repository.RaceRepository;
 import com.project.races.service.RaceService;
 import jakarta.persistence.EntityNotFoundException;
@@ -49,6 +50,7 @@ public class RaceServiceImpl implements RaceService {
     public Race findRaceByDate(LocalDateTime localDateTime) {
         return raceRepository.findAll().stream().filter(obj -> obj.getDateOfStart().equals(localDateTime)).findAny().get();
     }
+
     @Transactional
     @Override
     public Race getById(long id) {
@@ -70,6 +72,23 @@ public class RaceServiceImpl implements RaceService {
         }
         logger.error("Recipe to update cannot be 'null'");
         return null;
+    }
+
+    @Override
+    public void update(Race race, Team team) {
+        logger.info("___________update");
+
+        if (race != null) {
+            getById(race.getId());
+            logger.info("___________PREVIOS LIST" + race.getTeams());
+
+            race.getTeams().add(team);
+            logger.info("___________FINISH LIST" + race.getTeams());
+
+            logger.info("Updated recipe " + race);
+            raceRepository.save(race);
+        }
+        logger.error("Recipe to update cannot be 'null'");
     }
 
     @Override

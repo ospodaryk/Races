@@ -3,6 +3,7 @@ package com.project.races.controller;
 import com.project.races.dto.race.RaceRequest;
 import com.project.races.dto.race.RaceResponse;
 import com.project.races.dto.race.RaceTransformer;
+import com.project.races.model.Race;
 import com.project.races.service.RaceService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -32,6 +33,7 @@ public class RaceController {
     @GetMapping
     List<RaceResponse> getAll() {
         logger.info("@Get: getAllUsers()");
+//        return raceService.getAll();
         return raceService.getAll().stream()
                 .map(raceTransformer::convertToRaceResponse)
                 .collect(Collectors.toList());
