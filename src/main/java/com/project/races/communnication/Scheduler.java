@@ -1,6 +1,5 @@
 package com.project.races.communnication;
 
-import com.project.races.communnication.RaceProducer;
 import com.project.races.model.Race;
 import com.project.races.service.RaceService;
 import lombok.Data;

@@ -5,7 +5,6 @@ import com.project.races.model.Race;
 import com.project.races.model.Team;
 import com.project.races.repository.RaceRepository;
 import com.project.races.service.RaceService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
@@ -51,6 +50,7 @@ public class RaceServiceImpl implements RaceService {
     public Race findRaceByDate(LocalDateTime localDateTime) {
         return raceRepository.findAll().stream().filter(obj -> obj.getDateOfStart().equals(localDateTime)).findAny().get();
     }
+
     @Transactional
     @Override
     public Race getById(long id) {
@@ -68,6 +68,7 @@ public class RaceServiceImpl implements RaceService {
         List<Pilot> pilots = team.getPilots();
         return pilots;
     }
+
     @Override
     public Race update(Race recipe) {
         if (recipe != null) {

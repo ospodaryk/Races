@@ -1,16 +1,6 @@
 package com.project.races.communnication;
 
 import com.project.races.model.Race;
-import com.project.races.service.RaceService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import com.project.races.model.Race;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 

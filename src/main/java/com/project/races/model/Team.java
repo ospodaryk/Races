@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -28,12 +27,12 @@ public class Team {
     @Column(name = "score")
     private Long score;
 
-    @OneToMany(mappedBy = "team", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "team", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Pilot> pilots;
 
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "races")
-    private List<Race> races ;
+    private List<Race> races;
 
 }
