@@ -4,21 +4,17 @@ import com.project.races.dto.pilot.PilotRequest;
 import com.project.races.dto.pilot.PilotResponse;
 import com.project.races.dto.pilot.PilotTransformer;
 import com.project.races.model.Pilot;
-import com.project.races.model.Race;
 import com.project.races.model.Team;
+import com.project.races.service.PilotService;
 import com.project.races.service.TeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-
-import com.project.races.service.PilotService;
 
 
 @RestController
@@ -57,7 +53,7 @@ public class PilotController {
 
     @DeleteMapping("{task_id}/delete")
     public void delete(
-                       @PathVariable("task_id") long taskId) {
+            @PathVariable("task_id") long taskId) {
         pilotService.delete(taskId);
         logger.info("@Delete: deleteToDo(), id=" + taskId);
     }

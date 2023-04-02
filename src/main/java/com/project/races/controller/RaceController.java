@@ -3,7 +3,6 @@ package com.project.races.controller;
 import com.project.races.dto.race.RaceRequest;
 import com.project.races.dto.race.RaceResponse;
 import com.project.races.dto.race.RaceTransformer;
-import com.project.races.model.Race;
 import com.project.races.service.RaceService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -59,7 +58,6 @@ public class RaceController {
         raceService.create(raceTransformer.convertRaceRequestToRace(userRequest));
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
-
 
 
 }

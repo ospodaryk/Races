@@ -1,10 +1,8 @@
 package com.project.races.controller;
 
-import com.project.races.dto.pilot.PilotResponse;
 import com.project.races.dto.todo.TeamRequest;
 import com.project.races.dto.todo.TeamResponse;
 import com.project.races.dto.todo.TeamTransformer;
-import com.project.races.model.Pilot;
 import com.project.races.model.Race;
 import com.project.races.model.Team;
 import com.project.races.service.RaceService;
@@ -54,7 +52,7 @@ public class TeamController {
         if (race == null) {
             return ResponseEntity.notFound().build();
         }
-        teamService.create(team,race);
+        teamService.create(team, race);
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 

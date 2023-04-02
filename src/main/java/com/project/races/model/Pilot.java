@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -26,11 +25,11 @@ public class Pilot {
     @Column(name = "surname")
     private String surname;
 
-//    @NotBlank
+    //    @NotBlank
     @Column(name = "number")
     private Long number;
 
-//    @NotBlank
+    //    @NotBlank
     @Column(name = "score")
     private Long score;
 

@@ -75,7 +75,7 @@ public class TeamServiceImpl implements TeamService {
             return teamRepository.save(recipe);
         }
         logger.error("Recipe to update cannot be 'null'");
-     return null;
+        return null;
     }
 
     @Override

@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,16 +24,16 @@ public class Team {
     @Column(name = "name")
     private String name;
 
-//    @NotBlank
+    //    @NotBlank
     @Column(name = "score")
     private Long score;
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.REMOVE)
-    private List<Pilot> pilots=new ArrayList<>();
+    private List<Pilot> pilots = new ArrayList<>();
 
 
     @ManyToMany
     @JoinColumn(name = "races")
-    private List<Race> races=new ArrayList<>();
+    private List<Race> races = new ArrayList<>();
 
 }

@@ -1,14 +1,11 @@
 package com.project.races.model;
 
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +42,7 @@ public class Race {
     private String dateOfStart;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "races")
-    private List<Team> teams=new ArrayList<>();
-
+    private List<Team> teams = new ArrayList<>();
 
 
 }

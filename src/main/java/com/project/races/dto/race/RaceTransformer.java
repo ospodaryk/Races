@@ -3,7 +3,6 @@ package com.project.races.dto.race;
 import com.project.races.model.Race;
 import org.modelmapper.ModelMapper;
 
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 
@@ -20,7 +19,7 @@ public class RaceTransformer {
     }
 
     public RaceResponse convertToRaceResponse(Race race) {
-        RaceResponse raceResponse =modelMapper.map(race, RaceResponse.class);
+        RaceResponse raceResponse = modelMapper.map(race, RaceResponse.class);
         raceResponse.setId(race.getId());
         raceResponse.setName(race.getName());
         raceResponse.setStadium(race.getStadium());

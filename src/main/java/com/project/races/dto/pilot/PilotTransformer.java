@@ -8,25 +8,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PilotTransformer {
-    private  final ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
     private static final Logger logger = LoggerFactory.getLogger(PilotTransformer.class);
 
     public PilotTransformer(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
-    public  Pilot convertPilotRequestToPilot(PilotRequest pilotRequest, Team team) {
+    public Pilot convertPilotRequestToPilot(PilotRequest pilotRequest, Team team) {
         logger.info("convertRecipeRequestToRecipe");
-        Pilot pilot=modelMapper.map(pilotRequest, Pilot.class);
+        Pilot pilot = modelMapper.map(pilotRequest, Pilot.class);
         pilot.setTeam(team);
         pilot.setScore(0L);
         return pilot;
     }
 
 
-    public  PilotResponse convertPilotToPilotResponse(Pilot pilot) {
+    public PilotResponse convertPilotToPilotResponse(Pilot pilot) {
         logger.info("convertToRecipeResponse");
-        PilotResponse pilotResponse=new PilotResponse();
+        PilotResponse pilotResponse = new PilotResponse();
         pilotResponse.setId(pilot.getId());
         pilotResponse.setNumber(pilot.getNumber());
         pilotResponse.setCountry(pilot.getCountry());
@@ -35,7 +35,7 @@ public class PilotTransformer {
         pilotResponse.setTeamID(pilot.getTeam().getId());
         pilotResponse.setScore(pilot.getScore());
 
-        return  pilotResponse;
+        return pilotResponse;
     }
 
 }

@@ -11,7 +11,7 @@ public class RaceRequest {
     private String trackName;
     private Long numberOfLaps;
 
-//    @Pattern(regexp = "\\d{2}\\s\\d{2}\\s\\d{2}\\s\\d{2}\\s\\d{2}\\s\\d{4}",
+    //    @Pattern(regexp = "\\d{2}\\s\\d{2}\\s\\d{2}\\s\\d{2}\\s\\d{2}\\s\\d{4}",
 //            message = "Must be in format <ss mm HH dd MM yyyy>")
     private String dateOfStart;
 

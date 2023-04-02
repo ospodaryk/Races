@@ -1,12 +1,10 @@
 package com.project.races.dto.todo;
 
-import com.project.races.model.Race;
 import com.project.races.model.Team;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class TeamTransformer {
@@ -26,7 +24,7 @@ public class TeamTransformer {
     }
 
     public TeamResponse convertTeamToTeamResponse(Team team) {
-        TeamResponse teamResponse =new TeamResponse();
+        TeamResponse teamResponse = new TeamResponse();
         teamResponse.setId(team.getId());
         teamResponse.setScore(team.getScore());
         teamResponse.setName(team.getName());

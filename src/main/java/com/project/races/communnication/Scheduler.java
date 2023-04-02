@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
 
@@ -22,7 +24,6 @@ public class Scheduler {
     @Autowired
     private SchedulerConfig schedulerConfig;
 
-    //    @Scheduled(fixedDelay = 10000)
     @Scheduled(cron = "#{@schedulerConfig.getCronExpression()}")
     public void scheduleTask() {
         logger.info("Sending scheduled message...");
@@ -43,8 +44,23 @@ class SchedulerConfig {
         System.out.println("___CONSTRUCTOR");
         List<Race> allRaces = raceService.getAll();
         int randomIndex = new Random().nextInt(allRaces.size());
-        this.race = allRaces.get(randomIndex);
+
+//        this.race = allRaces.get(randomIndex);
+        this.race = allRaces.get(0);
+        updateDate(raceService);
         this.cronExpression = replaceLastFourWithAsterisks(this.race.getDateOfStart());
+    }
+
+    private void updateDate(RaceService raceService) {
+        this.race.setDateOfStart(replaceMinute());
+        raceService.update(this.race);
+    }
+
+
+    private static String replaceMinute() {
+        LocalDateTime time = LocalDateTime.now().plusSeconds(10);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ss mm HH dd MM yyyy");
+        return time.format(formatter);
     }
 
     public String getCronExpression() {
@@ -55,14 +71,6 @@ class SchedulerConfig {
         System.out.println("_______getRace");
         return this.race;
     }
-
-//    private Race getRandomRace(RaceService raceService) {
-//        System.out.println("_______getRandomRace");
-//        List<Race> allRaces = raceService.getAll();
-//        int randomIndex = new Random().nextInt(allRaces.size());
-//        this.race= allRaces.get(randomIndex);
-//        return race;
-//    }
 
     private static String replaceLastFourWithAsterisks(String str) {
         System.out.println("_______replaceLastFourWithAsterisks");

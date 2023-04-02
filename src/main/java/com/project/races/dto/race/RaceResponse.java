@@ -3,10 +3,11 @@ package com.project.races.dto.race;
 import lombok.Data;
 
 import java.util.List;
+
 @Data
 public class RaceResponse {
 
-    private Long id ;
+    private Long id;
 
     private String name;
 
