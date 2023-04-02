@@ -1,7 +1,6 @@
 package com.project.races.communnication;
 
 import com.project.races.model.Race;
-import com.project.races.repository.RaceRepository;
 import com.project.races.service.RaceService;
 import lombok.Data;
 import org.slf4j.Logger;
@@ -10,29 +9,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
 
-@Data
 @Component
 public class Scheduler {
     private static final Logger logger = LoggerFactory.getLogger(Scheduler.class);
-    private Producer producer;
-    private SchedulerConfig schedulerConfig;
-    private RaceService raceService;
 
     @Autowired
-    public Scheduler(Producer producer, SchedulerConfig schedulerConfig, RaceService raceService) {
-        this.producer = producer;
-        this.schedulerConfig = schedulerConfig;
-        this.raceService = raceService;
-    }
+    private RaceProducer raceProducer;
 
-    @Scheduled(cron = "#{@schedulerConfig.getCronExpression()}")
+    @Autowired
+    private SchedulerConfig schedulerConfig;
+
+    @Scheduled(fixedDelay = 10000)
     public void scheduleTask() {
-        producer.sendMessage(schedulerConfig.getRace());
+        logger.info("Sending scheduled message...");
+        System.out.println("Scheduled");
+        System.out.println("______________________"+schedulerConfig.getRace().toString());
+        raceProducer.sendMessage(schedulerConfig.getRace());
     }
 }
 
@@ -40,12 +35,15 @@ public class Scheduler {
 @Component
 class SchedulerConfig {
     private final String cronExpression;
-    private final Race race;
+    private Race race;
 
     @Autowired
     public SchedulerConfig(RaceService raceService) {
-        this.race = getRandomRace(raceService);
-        this.cronExpression = replaceLastFourWithAsterisks(race.getDateOfStart());
+        System.out.println("___CONSTRUCTOR");
+        List<Race> allRaces = raceService.getAll();
+        int randomIndex = new Random().nextInt(allRaces.size());
+        this.race= allRaces.get(randomIndex);
+        this.cronExpression = replaceLastFourWithAsterisks(this.race.getDateOfStart());
     }
 
     public String getCronExpression() {
@@ -53,22 +51,24 @@ class SchedulerConfig {
     }
 
     public Race getRace() {
+        System.out.println("_______getRace");
         return this.race;
     }
 
-    private Race getRandomRace(RaceService raceService) {
-        List<Race> allRaces = raceService.getAll();
-        int randomIndex = new Random().nextInt(allRaces.size());
-        return allRaces.get(randomIndex);
-    }
+//    private Race getRandomRace(RaceService raceService) {
+//        System.out.println("_______getRandomRace");
+//        List<Race> allRaces = raceService.getAll();
+//        int randomIndex = new Random().nextInt(allRaces.size());
+//        this.race= allRaces.get(randomIndex);
+//        return race;
+//    }
 
     private static String replaceLastFourWithAsterisks(String str) {
+        System.out.println("_______replaceLastFourWithAsterisks");
         int length = str.length();
         if (length < 4) {
-            // the string is too short to replace, return it as-is
             return str;
         } else {
-            // replace the last 4 characters with asterisks
             String asterisks = "*";
             return str.substring(0, length - 4) + asterisks;
         }

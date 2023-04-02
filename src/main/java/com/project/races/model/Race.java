@@ -1,6 +1,7 @@
 package com.project.races.model;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,7 +43,9 @@ public class Race {
     @Column(name = "dateOfStart")
     private String dateOfStart;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Team> teams;
+
+
 
 }

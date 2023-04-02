@@ -4,6 +4,8 @@ import com.project.races.model.Race;
 import com.project.races.repository.RaceRepository;
 import com.project.races.service.RaceService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -47,14 +49,16 @@ public class RaceServiceImpl implements RaceService {
     public Race findRaceByDate(LocalDateTime localDateTime) {
         return raceRepository.findAll().stream().filter(obj -> obj.getDateOfStart().equals(localDateTime)).findAny().get();
     }
-
+    @Transactional
     @Override
     public Race getById(long id) {
         logger.info("Read recipe by ID=" + id);
-        return raceRepository.findById(id).orElseThrow(() -> {
-            logger.error("Recipe with id " + id + " not found");
-            throw new EntityNotFoundException("Recipe with id " + id + " not found");
-        });
+        Race race = raceRepository.findById(id).orElse(null);
+        if (race != null) {
+            // Initialize the lazy-loaded collection
+            Hibernate.initialize(race.getTeams());
+        }
+        return race;
     }
 
     @Override
