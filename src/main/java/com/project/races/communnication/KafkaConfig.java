@@ -1,5 +1,6 @@
 package com.project.races.communnication;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.project.races.model.Race;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -14,10 +15,10 @@ import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.apache.kafka.clients.CommonClientConfigs;
 
 import java.util.HashMap;
 import java.util.Map;
-
 @Configuration
 @EnableKafka
 @EnableScheduling

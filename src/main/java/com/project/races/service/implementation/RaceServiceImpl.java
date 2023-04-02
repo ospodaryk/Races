@@ -1,9 +1,11 @@
 package com.project.races.service.implementation;
 
+import com.project.races.model.Pilot;
 import com.project.races.model.Race;
 import com.project.races.model.Team;
 import com.project.races.repository.RaceRepository;
 import com.project.races.service.RaceService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
@@ -49,7 +51,6 @@ public class RaceServiceImpl implements RaceService {
     public Race findRaceByDate(LocalDateTime localDateTime) {
         return raceRepository.findAll().stream().filter(obj -> obj.getDateOfStart().equals(localDateTime)).findAny().get();
     }
-
     @Transactional
     @Override
     public Race getById(long id) {
@@ -62,6 +63,11 @@ public class RaceServiceImpl implements RaceService {
         return race;
     }
 
+    @Transactional
+    public List<Pilot> getPilotsByTeam(Team team) {
+        List<Pilot> pilots = team.getPilots();
+        return pilots;
+    }
     @Override
     public Race update(Race recipe) {
         if (recipe != null) {
@@ -71,23 +77,6 @@ public class RaceServiceImpl implements RaceService {
         }
         logger.error("Recipe to update cannot be 'null'");
         return null;
-    }
-
-    @Override
-    public void update(Race race, Team team) {
-        logger.info("___________update");
-
-        if (race != null) {
-            getById(race.getId());
-            logger.info("___________PREVIOS LIST" + race.getTeams());
-
-            race.getTeams().add(team);
-            logger.info("___________FINISH LIST" + race.getTeams());
-
-            logger.info("Updated recipe " + race);
-            raceRepository.save(race);
-        }
-        logger.error("Recipe to update cannot be 'null'");
     }
 
     @Override

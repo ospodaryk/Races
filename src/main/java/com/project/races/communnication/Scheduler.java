@@ -1,5 +1,6 @@
 package com.project.races.communnication;
 
+import com.project.races.communnication.RaceProducer;
 import com.project.races.model.Race;
 import com.project.races.service.RaceService;
 import lombok.Data;
@@ -45,22 +46,10 @@ class SchedulerConfig {
         List<Race> allRaces = raceService.getAll();
         int randomIndex = new Random().nextInt(allRaces.size());
 
-//        this.race = allRaces.get(randomIndex);
-        this.race = allRaces.get(0);
+        this.race = allRaces.get(randomIndex);
         updateDate(raceService);
+
         this.cronExpression = replaceLastFourWithAsterisks(this.race.getDateOfStart());
-    }
-
-    private void updateDate(RaceService raceService) {
-        this.race.setDateOfStart(replaceMinute());
-        raceService.update(this.race);
-    }
-
-
-    private static String replaceMinute() {
-        LocalDateTime time = LocalDateTime.now().plusSeconds(10);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ss mm HH dd MM yyyy");
-        return time.format(formatter);
     }
 
     public String getCronExpression() {
@@ -72,7 +61,19 @@ class SchedulerConfig {
         return this.race;
     }
 
-    private static String replaceLastFourWithAsterisks(String str) {
+    private void updateDate(RaceService raceService) {
+        this.race.setDateOfStart(replaceMinute());
+        raceService.update(this.race);
+    }
+
+
+    private String replaceMinute() {
+        LocalDateTime time = LocalDateTime.now().plusSeconds(10);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ss mm HH dd MM yyyy");
+        return time.format(formatter);
+    }
+
+    private String replaceLastFourWithAsterisks(String str) {
         System.out.println("_______replaceLastFourWithAsterisks");
         int length = str.length();
         if (length < 4) {

@@ -41,7 +41,7 @@ public class Race {
     @Column(name = "dateOfStart")
     private String dateOfStart;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "races")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "races")
     private List<Team> teams = new ArrayList<>();
 
 

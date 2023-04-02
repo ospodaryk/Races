@@ -3,6 +3,7 @@ package com.project.races.dto.race;
 import com.project.races.model.Race;
 import org.modelmapper.ModelMapper;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 
@@ -15,6 +16,7 @@ public class RaceTransformer {
 
     public Race convertRaceRequestToRace(RaceRequest raceRequest) {
         Race race = modelMapper.map(raceRequest, Race.class);
+        race.setTeams(new ArrayList<>());
         return race;
     }
 

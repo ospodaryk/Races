@@ -15,7 +15,6 @@ public interface RaceService {
 
     Race update(Race race);
 
-    void update(Race race, Team team);
 
     void delete(long id);
 

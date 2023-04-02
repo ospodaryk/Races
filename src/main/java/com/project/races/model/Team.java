@@ -28,12 +28,12 @@ public class Team {
     @Column(name = "score")
     private Long score;
 
-    @OneToMany(mappedBy = "team", cascade = CascadeType.REMOVE)
-    private List<Pilot> pilots = new ArrayList<>();
+    @OneToMany(mappedBy = "team", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
+    private List<Pilot> pilots;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "races")
-    private List<Race> races = new ArrayList<>();
+    private List<Race> races ;
 
 }

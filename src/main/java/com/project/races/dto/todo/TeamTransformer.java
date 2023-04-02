@@ -5,6 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class TeamTransformer {
@@ -19,6 +20,8 @@ public class TeamTransformer {
     public Team convertTeamRequestToTeam(TeamRequest teamRequest) {
         Team team = modelMapper.map(teamRequest, Team.class);
         team.setName(teamRequest.getName());
+        team.setRaces(new ArrayList<>());
+        team.setPilots(new ArrayList<>());
         team.setScore(0L);
         return team;
     }
