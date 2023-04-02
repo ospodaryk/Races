@@ -22,11 +22,12 @@ public class Scheduler {
     @Autowired
     private SchedulerConfig schedulerConfig;
 
-    @Scheduled(fixedDelay = 10000)
+    //    @Scheduled(fixedDelay = 10000)
+    @Scheduled(cron = "#{@schedulerConfig.getCronExpression()}")
     public void scheduleTask() {
         logger.info("Sending scheduled message...");
         System.out.println("Scheduled");
-        System.out.println("______________________"+schedulerConfig.getRace().toString());
+        System.out.println("______________________" + schedulerConfig.getRace().toString());
         raceProducer.sendMessage(schedulerConfig.getRace());
     }
 }
@@ -42,7 +43,7 @@ class SchedulerConfig {
         System.out.println("___CONSTRUCTOR");
         List<Race> allRaces = raceService.getAll();
         int randomIndex = new Random().nextInt(allRaces.size());
-        this.race= allRaces.get(randomIndex);
+        this.race = allRaces.get(randomIndex);
         this.cronExpression = replaceLastFourWithAsterisks(this.race.getDateOfStart());
     }
 
