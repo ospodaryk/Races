@@ -1,7 +1,9 @@
 package com.project.races.communnication;
 
 import com.project.races.model.Race;
+import com.project.races.model.Team;
 import com.project.races.service.RaceService;
+import com.project.races.service.TeamService;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,37 +20,61 @@ import java.util.Random;
 public class Scheduler {
     private static final Logger logger = LoggerFactory.getLogger(Scheduler.class);
 
-    @Autowired
-    private RaceProducer raceProducer;
+    private final RaceProducer raceProducer;
+    private final SchedulerConfig schedulerConfig;
+    private final TeamService teamService;
 
     @Autowired
-    private SchedulerConfig schedulerConfig;
+    public Scheduler(RaceProducer raceProducer, SchedulerConfig schedulerConfig, TeamService teamService) {
+        this.raceProducer = raceProducer;
+        this.schedulerConfig = schedulerConfig;
+        this.teamService = teamService;
+    }
 
-    //    @Scheduled(fixedDelay = 5000)
+
     @Scheduled(cron = "#{@schedulerConfig.getCronExpression()}")
     public void scheduleTask() {
         logger.info("Sending scheduled message...");
         System.out.println("Scheduled");
         System.out.println("______________________" + schedulerConfig.getRace().toString());
+        updateTeam(teamService);
         raceProducer.sendMessage(schedulerConfig.getRace());
     }
+
+
+    private void updateTeam(TeamService teamService) {
+        System.out.println("updateTeam");
+        System.out.println("___________________"+schedulerConfig.getRace().getTeams().toString());
+        Team team = schedulerConfig.getRace().getTeams().get(0);
+        System.out.println(team.toString());
+
+        team.setName("Taras");
+        teamService.update(team);
+    }
+
 }
 
 @Data
 @Component
 class SchedulerConfig {
     private final String cronExpression;
-    private Race race;
+    private final Race race;
 
-    @Autowired
     public SchedulerConfig(RaceService raceService) {
         System.out.println("___CONSTRUCTOR");
         List<Race> allRaces = raceService.getAll();
         int randomIndex = new Random().nextInt(allRaces.size());
-
-        this.race = allRaces.get(randomIndex);
-        updateDate(raceService);
-
+        this.race = allRaces.get(0);
+        try {
+            updateDate(raceService);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+//            updateTeam(teamService);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         this.cronExpression = replaceLastFourWithAsterisks(this.race.getDateOfStart());
     }
 
@@ -65,7 +91,6 @@ class SchedulerConfig {
         this.race.setDateOfStart(replaceMinute());
         raceService.update(this.race);
     }
-
 
     private String replaceMinute() {
         LocalDateTime time = LocalDateTime.now().plusSeconds(10);

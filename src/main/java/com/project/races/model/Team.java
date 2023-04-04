@@ -1,5 +1,6 @@
 package com.project.races.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -27,9 +28,10 @@ public class Team  implements Serializable {
 
     @Column(name = "score")
     private Long score;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "team", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Pilot> pilots;
+    @JsonIgnore
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

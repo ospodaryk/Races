@@ -56,4 +56,18 @@ public class TeamController {
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
+    @PutMapping("/{team_id}/update/races/{race_id}")
+    public ResponseEntity<HttpStatus> update(@RequestBody TeamRequest toDoRequest, @PathVariable("team_id") long todoId, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            logger.error("@Put: update() has errors " + bindingResult.getAllErrors().toString());
+            return ResponseEntity.ok(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        Team toDo = teamService.getById(todoId);
+        Team newToDo = teamTransformer.convertTeamRequestToTeam(toDoRequest);
+        newToDo.setId(todoId);
+        teamService.update(newToDo);
+        logger.info("@Post: update(), id=" + toDo.getId());
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
 }

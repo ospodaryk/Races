@@ -67,7 +67,7 @@ public class TeamServiceImpl implements TeamService {
         Team race = teamRepository.findById(id).orElse(null);
         if (race != null) {
             // Initialize the lazy-loaded collection
-            Hibernate.initialize(race.getRaces());
+            Hibernate.initialize(race.getPilots());
         }
         return race;
     }
@@ -75,10 +75,16 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Team update(Team recipe) {
         if (recipe != null) {
+            System.out.println("recipe != null" );
+
             getById(recipe.getId());
+            System.out.println("Updated recipe " );
+
             logger.info("Updated recipe " + recipe);
             return teamRepository.save(recipe);
         }
+        System.out.println(" null" );
+
         logger.error("Recipe to update cannot be 'null'");
         return null;
     }
