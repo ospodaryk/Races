@@ -40,7 +40,7 @@ public class Race  implements Serializable {
 
     @Column(name = "dateOfStart")
     private String dateOfStart;
-
+@JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "race_team",
