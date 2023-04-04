@@ -19,24 +19,20 @@ import java.util.List;
 public class TeamServiceImpl implements TeamService {
     private final TeamRepository teamRepository;
     private final RaceService raceService;
-
     private static final Logger logger = LoggerFactory.getLogger(TeamServiceImpl.class);
-    private final RaceRepository raceRepository;
 
-    public TeamServiceImpl(TeamRepository teamRepository, RaceService raceService,
-                           RaceRepository raceRepository) {
+    public TeamServiceImpl(TeamRepository teamRepository, RaceService raceService) {
         this.teamRepository = teamRepository;
         this.raceService = raceService;
-        this.raceRepository = raceRepository;
     }
 
     @Override
-    public Team create(Team recipe) {
-        if (recipe != null) {
-            logger.info("Recipe create success");
-            return teamRepository.save(recipe);
+    public Team create(Team team) {
+        if (team != null) {
+            logger.info("Team create success");
+            return teamRepository.save(team);
         }
-        logger.error("Recipe  cannot 'null'");
+        logger.error("Team  cannot 'null'");
         return null;
     }
 
@@ -48,7 +44,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void deleteAll() {
-        logger.info("Delete all recipes");
+        logger.info("Delete all Teams");
         teamRepository.findAll().forEach(obj -> delete(obj.getId()));
     }
 
@@ -66,10 +62,9 @@ public class TeamServiceImpl implements TeamService {
     @Transactional
     @Override
     public Team getById(long id) {
-        logger.info("Read recipe by ID=" + id);
+        logger.info("Read Team by ID=" + id);
         Team race = teamRepository.findById(id).orElse(null);
         if (race != null) {
-            // Initialize the lazy-loaded collection
             Hibernate.initialize(race.getPilots());
         }
         return race;
@@ -78,30 +73,24 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Team update(Team recipe) {
         if (recipe != null) {
-            System.out.println("recipe != null");
-
             getById(recipe.getId());
-            System.out.println("Updated recipe ");
-
-            logger.info("Updated recipe " + recipe);
+            logger.info("Updated Team " + recipe);
             return teamRepository.save(recipe);
         }
-        System.out.println(" null");
-
-        logger.error("Recipe to update cannot be 'null'");
+        logger.error("Team to update cannot be 'null'");
         return null;
     }
 
     @Override
     public void delete(long id) {
         Team recipe = getById(id);
-        logger.info("Delete recipe by ID=" + id);
+        logger.info("Delete Team by ID=" + id);
         teamRepository.delete(recipe);
     }
 
     @Override
     public List<Team> getAll() {
-        logger.info("Get all Recipes");
+        logger.info("Get all Teams");
         return teamRepository.findAll();
     }
 
