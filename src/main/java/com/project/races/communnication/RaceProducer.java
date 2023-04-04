@@ -14,7 +14,9 @@ public class RaceProducer {
     private KafkaTemplate<String, Race> kafkaTemplate;
 
     public void sendMessage(Race race) {
-        kafkaTemplate.send(TOPIC, race);
+        if (race != null) {
+            kafkaTemplate.send(TOPIC, race);
+        }
     }
 
 }

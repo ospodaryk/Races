@@ -24,6 +24,7 @@ public class Scheduler {
     @Autowired
     private SchedulerConfig schedulerConfig;
 
+    //    @Scheduled(fixedDelay = 5000)
     @Scheduled(cron = "#{@schedulerConfig.getCronExpression()}")
     public void scheduleTask() {
         logger.info("Sending scheduled message...");

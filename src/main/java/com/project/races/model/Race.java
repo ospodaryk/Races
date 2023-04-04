@@ -1,5 +1,6 @@
 package com.project.races.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 @Entity(name = "Race")
 @Table(name = "race")
 public class Race  implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,4 +48,10 @@ public class Race  implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "team_id"))
     private List<Team> teams = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Race{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

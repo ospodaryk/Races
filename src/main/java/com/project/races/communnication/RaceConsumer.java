@@ -11,7 +11,7 @@ public class RaceConsumer {
     public void consume(Race race) {
         try {
             // Process the incoming race message
-            System.out.println("Received race message: " + race);
+            System.out.println("Received race message: " + race.getName());
         } catch (Exception ex) {
             // Handle the exception and log the error message
             System.err.println("Error while processing race message: " + ex.getMessage());
