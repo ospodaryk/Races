@@ -8,6 +8,8 @@ import com.project.races.repository.TeamRepository;
 import com.project.races.service.RaceService;
 import com.project.races.service.TeamService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -58,13 +60,16 @@ public class TeamServiceImpl implements TeamService {
     }
 
 
+    @Transactional
     @Override
     public Team getById(long id) {
         logger.info("Read recipe by ID=" + id);
-        return teamRepository.findById(id).orElseThrow(() -> {
-            logger.error("Recipe with id " + id + " not found");
-            throw new EntityNotFoundException("Recipe with id " + id + " not found");
-        });
+        Team race = teamRepository.findById(id).orElse(null);
+        if (race != null) {
+            // Initialize the lazy-loaded collection
+            Hibernate.initialize(race.getRaces());
+        }
+        return race;
     }
 
     @Override

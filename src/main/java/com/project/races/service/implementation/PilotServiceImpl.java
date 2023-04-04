@@ -4,6 +4,8 @@ import com.project.races.model.Pilot;
 import com.project.races.repository.PilotRepository;
 import com.project.races.service.PilotService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.Transient;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -60,7 +62,7 @@ public class PilotServiceImpl implements PilotService {
         return pilotRepository.findAll().stream().filter(obj -> obj.getSurname().equals(surname)).findAny().get();
     }
 
-
+    @Transactional
     @Override
     public Pilot getById(long id) {
         logger.info("Read recipe by ID=" + id);

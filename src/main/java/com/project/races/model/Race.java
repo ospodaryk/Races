@@ -6,17 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 @Data
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "Race")
 @Table(name = "race")
-
-public class Race {
+public class Race  implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,8 +39,11 @@ public class Race {
     @Column(name = "dateOfStart")
     private String dateOfStart;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "races")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "race_team",
+            joinColumns = @JoinColumn(name = "race_id"),
+            inverseJoinColumns = @JoinColumn(name = "team_id"))
     private List<Team> teams = new ArrayList<>();
-
 
 }

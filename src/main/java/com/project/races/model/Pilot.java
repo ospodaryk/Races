@@ -6,16 +6,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "Pilot")
 @Table(name = "pilot")
-public class Pilot {
+public class Pilot  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id = 0L;
+    private Long id;
 
     @NotBlank
     @Column(name = "name")
@@ -25,11 +27,9 @@ public class Pilot {
     @Column(name = "surname")
     private String surname;
 
-    //    @NotBlank
     @Column(name = "number")
     private Long number;
 
-    //    @NotBlank
     @Column(name = "score")
     private Long score;
 
@@ -38,7 +38,8 @@ public class Pilot {
     private String country;
 
     @ManyToOne
-    @JoinColumn(name = "team")
+    @JoinColumn(name = "team_id")
     private Team team;
+
 
 }

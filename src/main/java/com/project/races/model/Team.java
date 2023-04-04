@@ -6,14 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "Team")
 @Table(name = "team")
-public class Team {
+public class Team  implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -23,16 +24,16 @@ public class Team {
     @Column(name = "name")
     private String name;
 
-    //    @NotBlank
     @Column(name = "score")
     private Long score;
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Pilot> pilots;
 
-
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "races")
+    @JoinTable(
+            name = "race_team",
+            joinColumns = @JoinColumn(name = "team_id"),
+            inverseJoinColumns = @JoinColumn(name = "race_id"))
     private List<Race> races;
-
 }
