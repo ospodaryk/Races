@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @Service
 public class PilotServiceImpl implements PilotService {
     private final PilotRepository pilotRepository;
-
     private static final Logger logger = LoggerFactory.getLogger(PilotServiceImpl.class);
 
     public PilotServiceImpl(PilotRepository pilotRepository) {
@@ -23,10 +22,10 @@ public class PilotServiceImpl implements PilotService {
     }
 
     @Override
-    public Pilot create(Pilot recipe) {
-        if (recipe != null) {
-            logger.info("Recipe create success");
-            return pilotRepository.save(recipe);
+    public Pilot create(Pilot pilot) {
+        if (pilot != null) {
+            logger.info("Pilot create success");
+            return pilotRepository.save(pilot);
         }
         logger.error("Recipe  cannot 'null'");
         return null;
@@ -35,20 +34,18 @@ public class PilotServiceImpl implements PilotService {
 
     @Override
     public void deleteAll() {
-        logger.info("Delete all recipes");
+        logger.info("Delete all pilots");
         pilotRepository.findAll().forEach(obj -> delete(obj.getId()));
     }
 
     @Override
     public List<Pilot> findByCountry(String country) {
         return pilotRepository.findAll().stream().filter(obj -> obj.getCountry().equals(country)).collect(Collectors.toList());
-
     }
 
     @Override
     public List<Pilot> findByTeam(String team) {
         return pilotRepository.findAll().stream().filter(obj -> obj.getTeam().equals(team)).collect(Collectors.toList());
-
     }
 
     @Override
@@ -64,10 +61,10 @@ public class PilotServiceImpl implements PilotService {
     @Transactional
     @Override
     public Pilot getById(long id) {
-        logger.info("Read recipe by ID=" + id);
+        logger.info("Read Pilot by ID=" + id);
         return pilotRepository.findById(id).orElseThrow(() -> {
-            logger.error("Recipe with id " + id + " not found");
-            throw new EntityNotFoundException("Recipe with id " + id + " not found");
+            logger.error("Pilot with id " + id + " not found");
+            throw new EntityNotFoundException("Pilot with id " + id + " not found");
         });
     }
 
@@ -75,23 +72,23 @@ public class PilotServiceImpl implements PilotService {
     public Pilot update(Pilot recipe) {
         if (recipe != null) {
             getById(recipe.getId());
-            logger.info("Updated recipe " + recipe);
+            logger.info("Updated Pilot " + recipe);
             return pilotRepository.save(recipe);
         }
-        logger.error("Recipe to update cannot be 'null'");
+        logger.error("Pilot to update cannot be 'null'");
         return null;
     }
 
     @Override
     public void delete(long id) {
         Pilot recipe = getById(id);
-        logger.info("Delete recipe by ID=" + id);
+        logger.info("Delete Pilot by ID=" + id);
         pilotRepository.delete(recipe);
     }
 
     @Override
     public List<Pilot> getAll() {
-        logger.info("Get all Recipes");
+        logger.info("Get all Pilots");
         return pilotRepository.findAll();
     }
 
