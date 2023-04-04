@@ -6,16 +6,10 @@ import lombok.Data;
 public class PilotResponse {
     private Long id;
     private Long staticNumber;
-
     private String name;
-
     private String surname;
-
     private Long number;
-
     private Long score;
-
     private String country;
-
     private Long teamID;
 }

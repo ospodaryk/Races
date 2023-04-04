@@ -22,7 +22,7 @@ public class Team implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id = 0L;
-    //    @NotBlank
+    @NotBlank
     @Column(name = "staticNumber")
     private Long staticNumber;
     @NotBlank
@@ -37,17 +37,11 @@ public class Team implements Serializable {
     @JsonIgnore
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "race_team",
-            joinColumns = @JoinColumn(name = "team_id"),
-            inverseJoinColumns = @JoinColumn(name = "race_id"))
+    @JoinTable(name = "race_team", joinColumns = @JoinColumn(name = "team_id"), inverseJoinColumns = @JoinColumn(name = "race_id"))
     private List<Race> races;
 
     @Override
     public String toString() {
-        return "Team{" +
-                "name='" + name + '\'' +
-                ", score=" + score +
-                '}';
+        return "Team{" + "name='" + name + '\'' + ", score=" + score + '}';
     }
 }

@@ -1,8 +1,8 @@
 package com.project.races.controller;
 
-import com.project.races.dto.todo.TeamRequest;
-import com.project.races.dto.todo.TeamResponse;
-import com.project.races.dto.todo.TeamTransformer;
+import com.project.races.dto.team.TeamRequest;
+import com.project.races.dto.team.TeamResponse;
+import com.project.races.dto.team.TeamTransformer;
 import com.project.races.model.Race;
 import com.project.races.model.Team;
 import com.project.races.service.RaceService;

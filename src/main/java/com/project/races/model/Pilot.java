@@ -21,7 +21,7 @@ public class Pilot implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    //    @NotBlank
+    @NotBlank
     @Column(name = "staticNumber")
     private Long staticNumber;
 
@@ -49,8 +49,6 @@ public class Pilot implements Serializable {
 
     @Override
     public String toString() {
-        return "Pilot{" +
-                "name='" + name + '\'' +
-                '}';
+        return "Pilot{" + "name='" + name + '\'' + '}';
     }
 }
