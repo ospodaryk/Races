@@ -7,6 +7,9 @@ import com.project.races.model.Race;
 import com.project.races.model.Team;
 import com.project.races.service.RaceService;
 import com.project.races.service.TeamService;
+import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
+import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -17,10 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @RestController
 @RequestMapping("/api/team")
 public class TeamController {
+
     private final RaceService raceService;
     private final TeamService teamService;
     private final TeamTransformer teamTransformer;
@@ -34,46 +37,70 @@ public class TeamController {
     }
 
     @GetMapping
-    List<TeamResponse> getAllTeams() {
-        logger.info("@Get: getAllToDO()");
-        return teamService.getAll().stream().map(teamTransformer::convertTeamToTeamResponse).collect(Collectors.toList());
+    public List<TeamResponse> getAllTeams() {
+        logger.info("Retrieving all teams");
+        List<Team> teams = teamService.getAll();
+        List<TeamResponse> teamResponses = teams.stream().map(teamTransformer::convertTeamToTeamResponse).collect(Collectors.toList());
+        logger.info("Retrieved all teams successfully");
+        return teamResponses;
     }
 
-
-    @PostMapping("/create/team/{race_id}")
-    public ResponseEntity<HttpStatus> create(@PathVariable("race_id") long race_id, @RequestBody TeamRequest teamRequest, BindingResult bindingResult) {
-        if (teamRequest == null) {
-            return ResponseEntity.badRequest().build();
+    @GetMapping("/{team_id}")
+    public TeamResponse getTeamById(@PathVariable long team_id) {
+        logger.info("Retrieving team with id: {}", team_id);
+        Team team = teamService.getById(team_id);
+        if (team == null) {
+            logger.error("Team with id {} not found", team_id);
+            throw new ResourceNotFoundException("Team with id " + team_id + " not found");
         }
+        logger.info("Retrieved team with id {} successfully", team_id);
+        return teamTransformer.convertTeamToTeamResponse(team);
+    }
 
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteAllTeams() {
+        logger.info("Deleting all teams");
+        teamService.deleteAll();
+        logger.info("All teams deleted successfully");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{team_id}")
+    public ResponseEntity<HttpStatus> deleteTeam(@PathVariable long team_id) {
+        logger.info("Deleting team with id: {}", team_id);
+        teamService.delete(team_id);
+        logger.info("Team with id {} deleted successfully", team_id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("{team_id}/create")
+    public ResponseEntity<HttpStatus> createTeam(@PathVariable("team_id") long team_id, @RequestBody @Valid TeamRequest teamRequest) {
+        logger.info("Creating team with request: {}", teamRequest);
         Team team = teamTransformer.convertTeamRequestToTeam(teamRequest);
-        Race race = raceService.getById(race_id);
-
+        Race race = raceService.getById(team_id);
         if (race == null) {
-            return ResponseEntity.notFound().build();
+            logger.error("Race with id {} not found", team_id);
+            throw new ResourceNotFoundException("Race with id " + team_id + " not found");
         }
         teamService.create(team, race);
-
-
-//        var raceList = raceService.getAll();
-//        for (int i = 0; i < raceList.size(); i++) {
-//            teamService.create(team, race);
-//        }
+        logger.info("Team created successfully");
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
-    @PutMapping("/{team_id}/update/races/{race_id}")
-    public ResponseEntity<HttpStatus> update(@RequestBody TeamRequest toDoRequest, @PathVariable("team_id") long todoId, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            logger.error("@Put: update() has errors " + bindingResult.getAllErrors().toString());
-            return ResponseEntity.ok(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        Team toDo = teamService.getById(todoId);
-        Team newToDo = teamTransformer.convertTeamRequestToTeam(toDoRequest);
-        newToDo.setId(todoId);
-        teamService.update(newToDo);
-        logger.info("@Post: update(), id=" + toDo.getId());
+    @PutMapping("/{team_id}/{race_id}")
+    public ResponseEntity<HttpStatus> updateTeam(@RequestBody @Valid TeamRequest teamRequest, @PathVariable("team_id") long team_id) {
+        logger.info("Updating team with id {} and request: {}", team_id, teamRequest);
+        Team newTeam = teamTransformer.convertTeamRequestToTeam(teamRequest);
+        newTeam.setId(team_id);
+        teamService.update(newTeam);
+        logger.info("Team updated successfully");
         return ResponseEntity.ok(HttpStatus.OK);
+
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<HttpStatus> handleException(Exception ex) {
+        logger.error("An exception occurred: {}", ex.getMessage());
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
