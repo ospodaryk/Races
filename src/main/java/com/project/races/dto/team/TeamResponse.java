@@ -3,6 +3,7 @@ package com.project.races.dto.team;
 import lombok.Data;
 
 import java.util.List;
+
 @Data
 public class TeamResponse {
     private Long staticNumber;
