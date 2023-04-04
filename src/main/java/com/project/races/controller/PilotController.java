@@ -4,7 +4,6 @@ import com.project.races.dto.pilot.PilotRequest;
 import com.project.races.dto.pilot.PilotResponse;
 import com.project.races.dto.pilot.PilotTransformer;
 import com.project.races.model.Pilot;
-import com.project.races.model.Team;
 import com.project.races.service.PilotService;
 import com.project.races.service.TeamService;
 import org.slf4j.Logger;
@@ -38,7 +37,7 @@ public class PilotController {
         return pilotService.getAll().stream().map(pilotTransformer::convertPilotToPilotResponse).collect(Collectors.toList());
     }
 
-//    @GetMapping
+    //    @GetMapping
 //    public List<Pilot> getAllPilots(@PathVariable("team_id") long team_id) {
 //        logger.info("@Get: getTasks()");
 //                return pilotService.getAll();
@@ -47,10 +46,10 @@ public class PilotController {
 ////                .map(pilotTransformer::convertPilotToPilotResponse)
 ////                .collect(Collectors.toList());
 //    }
-@DeleteMapping
-public void deleteALL() {
-    pilotService.deleteAll();
-}
+    @DeleteMapping
+    public void deleteALL() {
+        pilotService.deleteAll();
+    }
 
 
     @DeleteMapping("{task_id}/delete")

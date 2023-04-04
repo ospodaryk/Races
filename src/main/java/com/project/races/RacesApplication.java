@@ -24,16 +24,16 @@ public class RacesApplication {
 
     @Bean
     public PilotTransformer userTransformer(ModelMapper modelMapper, PilotService pilotService) {
-        return new PilotTransformer(modelMapper,pilotService);
+        return new PilotTransformer(modelMapper, pilotService);
     }
 
     @Bean
     public TeamTransformer teamTransformer(ModelMapper modelMapper, TeamService teamService) {
-        return new TeamTransformer(modelMapper,teamService);
+        return new TeamTransformer(modelMapper, teamService);
     }
 
     @Bean
     public RaceTransformer raceTransformer(ModelMapper modelMapper, TeamService teamService) {
-        return new RaceTransformer(modelMapper,teamService);
+        return new RaceTransformer(modelMapper, teamService);
     }
 }

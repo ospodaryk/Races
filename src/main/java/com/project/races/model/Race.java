@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "Race")
 @Table(name = "race")
-public class Race  implements Serializable {
+public class Race implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -41,7 +42,7 @@ public class Race  implements Serializable {
 
     @Column(name = "dateOfStart")
     private String dateOfStart;
-@JsonIgnore
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "race_team",

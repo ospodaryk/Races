@@ -66,9 +66,10 @@ public class RaceServiceImpl implements RaceService {
         }
         return race;
     }
+
     @Override
-    public Team getByIdTeam(Long raceid,int teamid) {
-        return getById(raceid).getTeams().stream().filter(obj->obj.getStaticNumber()==teamid).findAny().get();
+    public Team getByIdTeam(Long raceid, int teamid) {
+        return getById(raceid).getTeams().stream().filter(obj -> obj.getStaticNumber() == teamid).findAny().get();
     }
 
     @Transactional

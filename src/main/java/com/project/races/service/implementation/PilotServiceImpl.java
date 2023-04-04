@@ -4,7 +4,6 @@ import com.project.races.model.Pilot;
 import com.project.races.repository.PilotRepository;
 import com.project.races.service.PilotService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.Transient;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

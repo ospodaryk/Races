@@ -7,7 +7,6 @@ import com.project.races.repository.RaceRepository;
 import com.project.races.repository.TeamRepository;
 import com.project.races.service.RaceService;
 import com.project.races.service.TeamService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
@@ -58,6 +57,7 @@ public class TeamServiceImpl implements TeamService {
         return teamRepository.findAll().stream().filter(obj -> obj.getPilots().equals(list)).findAny().get();
 
     }
+
     @Override
     public List<Team> findByRaceID(int raceID) {
         return raceService.getById(raceID).getTeams();
@@ -78,15 +78,15 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Team update(Team recipe) {
         if (recipe != null) {
-            System.out.println("recipe != null" );
+            System.out.println("recipe != null");
 
             getById(recipe.getId());
-            System.out.println("Updated recipe " );
+            System.out.println("Updated recipe ");
 
             logger.info("Updated recipe " + recipe);
             return teamRepository.save(recipe);
         }
-        System.out.println(" null" );
+        System.out.println(" null");
 
         logger.error("Recipe to update cannot be 'null'");
         return null;

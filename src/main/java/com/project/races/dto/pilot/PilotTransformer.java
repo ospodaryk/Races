@@ -4,8 +4,6 @@ package com.project.races.dto.pilot;
 import com.project.races.model.Pilot;
 import com.project.races.model.Team;
 import com.project.races.service.PilotService;
-import com.project.races.service.RaceService;
-import com.project.races.service.TeamService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PilotTransformer {
-    static  Long count=0L;
+    static Long count = 0L;
     private final ModelMapper modelMapper;
     private static final Logger logger = LoggerFactory.getLogger(PilotTransformer.class);
     private final PilotService pilotService;

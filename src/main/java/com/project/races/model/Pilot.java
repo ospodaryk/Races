@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity(name = "Pilot")
 @Table(name = "pilot")
-public class Pilot  implements Serializable {
+public class Pilot implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -21,7 +21,7 @@ public class Pilot  implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-//    @NotBlank
+    //    @NotBlank
     @Column(name = "staticNumber")
     private Long staticNumber;
 

@@ -9,19 +9,20 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "Team")
 @Table(name = "team")
-public class Team  implements Serializable {
+public class Team implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id = 0L;
-//    @NotBlank
+    //    @NotBlank
     @Column(name = "staticNumber")
     private Long staticNumber;
     @NotBlank

@@ -14,7 +14,8 @@ public interface RaceService {
     Race getById(long id);
 
     Race update(Race race);
-     Team getByIdTeam(Long raceid, int teamid);
+
+    Team getByIdTeam(Long raceid, int teamid);
 
 
     void delete(long id);

@@ -47,30 +47,30 @@ public class Scheduler {
 
     private void updateTeam(TeamService teamService) {
         Long raceid = schedulerConfig.getRace().getId();
-        System.out.println("____raceid"+raceid);
+        System.out.println("____raceid" + raceid);
         int size = schedulerConfig.getRace().getTeams().size();
-        System.out.println("____size"+size);
+        System.out.println("____size" + size);
 
         int index1 = new Random().nextInt(size);
         int index2 = new Random().nextInt(size);
         int index3 = new Random().nextInt(size);
 
         Team team1 = raceService.getByIdTeam(raceid, index1);
-        System.out.println("____team1"+team1);
+        System.out.println("____team1" + team1);
 
         team1.setScore(10L);
         while (index2 == index1) {
             index2 = new Random().nextInt(size);
         }
         Team team2 = raceService.getByIdTeam(raceid, index2);
-        System.out.println("____team2"+team2);
+        System.out.println("____team2" + team2);
 
         team2.setScore(5L);
         while ((index3 == index1) || (index3 == index2)) {
             index3 = new Random().nextInt(size);
         }
         Team team3 = raceService.getByIdTeam(raceid, index3);
-        System.out.println("____team3"+team3);
+        System.out.println("____team3" + team3);
 
         team3.setScore(1L);
 
