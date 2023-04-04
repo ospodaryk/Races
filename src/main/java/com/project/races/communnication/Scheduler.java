@@ -26,7 +26,6 @@ public class Scheduler {
     private final RaceService raceService;
 
     @Autowired
-
     public Scheduler(RaceProducer raceProducer, SchedulerConfig schedulerConfig, TeamService teamService, RaceService raceService) {
         this.raceProducer = raceProducer;
         this.schedulerConfig = schedulerConfig;
@@ -34,52 +33,49 @@ public class Scheduler {
         this.raceService = raceService;
     }
 
-
     @Scheduled(cron = "#{@schedulerConfig.getCronExpression()}")
     public void scheduleTask() {
-        logger.info("Sending scheduled message...");
-        System.out.println("Scheduled");
-        System.out.println("______________________" + schedulerConfig.getRace().toString());
-        updateTeam(teamService);
-        raceProducer.sendMessage(schedulerConfig.getRace());
+        try {
+            logger.info("Sending scheduled message...");
+            System.out.println("Sending scheduled message...");
+            updateTeam(teamService);
+            raceProducer.sendMessage(schedulerConfig.getRace());
+        } catch (Exception ex) {
+            logger.error("Error while scheduling task: {}", ex.getMessage());
+        }
     }
-
 
     private void updateTeam(TeamService teamService) {
-        Long raceid = schedulerConfig.getRace().getId();
-        System.out.println("____raceid" + raceid);
-        int size = schedulerConfig.getRace().getTeams().size();
-        System.out.println("____size" + size);
+        Race race = schedulerConfig.getRace();
+        int size = race.getTeams().size() - 1;
 
-        int index1 = new Random().nextInt(size);
-        int index2 = new Random().nextInt(size);
-        int index3 = new Random().nextInt(size);
+        int index1 = new Random().nextInt(size) + 1;
+        int index2 = new Random().nextInt(size) + 1;
+        int index3 = new Random().nextInt(size) + 1;
 
-        Team team1 = raceService.getByIdTeam(raceid, index1);
-        System.out.println("____team1" + team1);
-
-        team1.setScore(10L);
         while (index2 == index1) {
-            index2 = new Random().nextInt(size);
+            index2 = new Random().nextInt(size) + 1;
         }
-        Team team2 = raceService.getByIdTeam(raceid, index2);
-        System.out.println("____team2" + team2);
-
-        team2.setScore(5L);
         while ((index3 == index1) || (index3 == index2)) {
-            index3 = new Random().nextInt(size);
+            index3 = new Random().nextInt(size) + 1;
         }
-        Team team3 = raceService.getByIdTeam(raceid, index3);
-        System.out.println("____team3" + team3);
 
+        Team team1 = raceService.getByIdTeam(race.getId(), index1);
+        team1.setScore(10L);
+        logger.info("Winner - " + team1);
+
+        Team team2 = raceService.getByIdTeam(race.getId(), index2);
+        team2.setScore(5L);
+        logger.info("2 place - " + team2);
+
+        Team team3 = raceService.getByIdTeam(race.getId(), index3);
         team3.setScore(1L);
+        logger.info("2 place - " + team3);
 
-
-        teamService.update(team2);
         teamService.update(team1);
+        teamService.update(team2);
         teamService.update(team3);
     }
-
 }
 
 @Data
@@ -87,16 +83,16 @@ public class Scheduler {
 class SchedulerConfig {
     private final String cronExpression;
     private final Race race;
+    private static final Logger logger = LoggerFactory.getLogger(SchedulerConfig.class);
 
     public SchedulerConfig(RaceService raceService) {
-        System.out.println("___CONSTRUCTOR");
         List<Race> allRaces = raceService.getAll();
         int randomIndex = new Random().nextInt(allRaces.size());
-        this.race = allRaces.get(0);
+        this.race = allRaces.get(randomIndex);
         try {
             updateDate(raceService);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error("Error while updating date: {}", e.getMessage());
         }
         this.cronExpression = replaceLastFourWithAsterisks(this.race.getDateOfStart());
     }
@@ -106,7 +102,6 @@ class SchedulerConfig {
     }
 
     public Race getRace() {
-        System.out.println("_______getRace");
         return this.race;
     }
 
@@ -122,7 +117,6 @@ class SchedulerConfig {
     }
 
     private String replaceLastFourWithAsterisks(String str) {
-        System.out.println("_______replaceLastFourWithAsterisks");
         int length = str.length();
         if (length < 4) {
             return str;

@@ -21,7 +21,6 @@ public class Pilot implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @NotBlank
     @Column(name = "staticNumber")
     private Long staticNumber;
 

@@ -22,7 +22,6 @@ public class Team implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id = 0L;
-    @NotBlank
     @Column(name = "staticNumber")
     private Long staticNumber;
     @NotBlank
