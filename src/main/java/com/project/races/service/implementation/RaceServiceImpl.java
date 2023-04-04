@@ -27,49 +27,69 @@ public class RaceServiceImpl implements RaceService {
     @Override
     public Race create(Race race) {
         if (race != null) {
-            logger.info("Race create success");
+            logger.info("Race created: " + race.toString());
             return raceRepository.save(race);
         }
-        logger.error("Race  cannot 'null'");
+        logger.error("Race to create cannot be 'null'");
         return null;
     }
 
-
     @Override
     public void deleteAll() {
-        logger.info("Delete all Races");
+        logger.info("Delete all races");
         raceRepository.findAll().forEach(obj -> delete(obj.getId()));
     }
 
     @Override
     public Race findRaceByName(String name) {
-        return raceRepository.findAll().stream().filter(obj -> obj.getName().equals(name)).findAny().get();
+        Race race = raceRepository.findAll().stream().filter(obj -> obj.getName().equals(name)).findAny().orElse(null);
+        if (race != null) {
+            logger.info("Found race with name: " + name);
+        } else {
+            logger.error("Cannot find race with name: " + name);
+        }
+        return race;
     }
 
     @Override
     public Race findRaceByDate(LocalDateTime localDateTime) {
-        return raceRepository.findAll().stream().filter(obj -> obj.getDateOfStart().equals(localDateTime)).findAny().get();
+        Race race = raceRepository.findAll().stream().filter(obj -> obj.getDateOfStart().equals(localDateTime)).findAny().orElse(null);
+        if (race != null) {
+            logger.info("Found race with date of start: " + localDateTime);
+        } else {
+            logger.error("Cannot find race with date of start: " + localDateTime);
+        }
+        return race;
     }
 
     @Transactional
     @Override
     public Race getById(long id) {
-        logger.info("Read Race by ID=" + id);
         Race race = raceRepository.findById(id).orElse(null);
         if (race != null) {
             Hibernate.initialize(race.getTeams());
+            logger.info("Read race by ID=" + id);
+        } else {
+            logger.error("Cannot read race by ID=" + id);
         }
         return race;
     }
 
     @Override
     public Team getByIdTeam(Long raceid, int teamid) {
-        return getById(raceid).getTeams().stream().filter(obj -> obj.getStaticNumber() == teamid).findAny().get();
+        Team team = getById(raceid).getTeams().stream().filter(obj -> obj.getStaticNumber() == teamid).findAny().orElse(null);
+        if (team != null) {
+            logger.info("Found team with ID=" + teamid + " in race with ID=" + raceid);
+        } else {
+            logger.error("Cannot find team with ID=" + teamid + " in race with ID=" + raceid);
+        }
+        return team;
     }
 
     @Transactional
     public List<Pilot> getPilotsByTeam(Team team) {
         List<Pilot> pilots = team.getPilots();
+        logger.info("Read pilots by team: " + team.toString());
         return pilots;
     }
 
@@ -77,7 +97,7 @@ public class RaceServiceImpl implements RaceService {
     public Race update(Race recipe) {
         if (recipe != null) {
             getById(recipe.getId());
-            logger.info("Updated Race " + recipe);
+            logger.info("Updated race: " + recipe.toString());
             return raceRepository.save(recipe);
         }
         logger.error("Race to update cannot be 'null'");
@@ -86,14 +106,18 @@ public class RaceServiceImpl implements RaceService {
 
     @Override
     public void delete(long id) {
-        Race recipe = getById(id);
-        logger.info("Delete Race by ID=" + id);
-        raceRepository.delete(recipe);
+        Race race = getById(id);
+        if (race != null) {
+            logger.info("Deleted race with ID=" + id);
+            raceRepository.delete(race);
+        } else {
+            logger.error("Cannot delete race with ID=" + id);
+        }
     }
 
     @Override
     public List<Race> getAll() {
-        logger.info("Get all Races");
+        logger.info("Get all races");
         return raceRepository.findAll();
     }
 

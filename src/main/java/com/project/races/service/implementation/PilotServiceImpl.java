@@ -24,71 +24,77 @@ public class PilotServiceImpl implements PilotService {
     @Override
     public Pilot create(Pilot pilot) {
         if (pilot != null) {
-            logger.info("Pilot create success");
-            return pilotRepository.save(pilot);
+            Pilot createdPilot = pilotRepository.save(pilot);
+            logger.info("Pilot created: {}", createdPilot);
+            return createdPilot;
         }
-        logger.error("Recipe  cannot 'null'");
+        logger.error("Failed to create pilot: null parameter");
         return null;
     }
 
 
     @Override
     public void deleteAll() {
-        logger.info("Delete all pilots");
+        logger.info("Deleting all pilots");
         pilotRepository.findAll().forEach(obj -> delete(obj.getId()));
     }
 
     @Override
     public List<Pilot> findByCountry(String country) {
+        logger.info("Finding pilots by country: {}", country);
         return pilotRepository.findAll().stream().filter(obj -> obj.getCountry().equals(country)).collect(Collectors.toList());
     }
 
     @Override
     public List<Pilot> findByTeam(String team) {
+        logger.info("Finding pilots by team: {}", team);
         return pilotRepository.findAll().stream().filter(obj -> obj.getTeam().equals(team)).collect(Collectors.toList());
     }
 
     @Override
     public Pilot findByNumber(Integer number) {
+        logger.info("Finding pilot by number: {}", number);
         return pilotRepository.findAll().stream().filter(obj -> obj.getNumber().equals(number)).findAny().get();
     }
 
     @Override
     public Pilot findBySurname(String surname) {
+        logger.info("Finding pilot by surname: {}", surname);
         return pilotRepository.findAll().stream().filter(obj -> obj.getSurname().equals(surname)).findAny().get();
     }
 
     @Transactional
     @Override
     public Pilot getById(long id) {
-        logger.info("Read Pilot by ID=" + id);
+        logger.info("Getting pilot by ID: {}", id);
         return pilotRepository.findById(id).orElseThrow(() -> {
-            logger.error("Pilot with id " + id + " not found");
+            logger.error("Pilot with id {} not found", id);
             throw new EntityNotFoundException("Pilot with id " + id + " not found");
         });
     }
 
     @Override
-    public Pilot update(Pilot recipe) {
-        if (recipe != null) {
-            getById(recipe.getId());
-            logger.info("Updated Pilot " + recipe);
-            return pilotRepository.save(recipe);
+    public Pilot update(Pilot pilot) {
+        if (pilot != null) {
+            getById(pilot.getId());
+            Pilot updatedPilot = pilotRepository.save(pilot);
+            logger.info("Pilot updated: {}", updatedPilot);
+            return updatedPilot;
         }
-        logger.error("Pilot to update cannot be 'null'");
+        logger.error("Failed to update pilot: null parameter");
         return null;
     }
 
     @Override
     public void delete(long id) {
-        Pilot recipe = getById(id);
-        logger.info("Delete Pilot by ID=" + id);
-        pilotRepository.delete(recipe);
+        Pilot pilot = getById(id);
+        logger.info("Deleting pilot by ID: {}", id);
+        pilotRepository.delete(pilot);
     }
 
     @Override
     public List<Pilot> getAll() {
-        logger.info("Get all Pilots");
+        logger.info("Getting all pilots");
         return pilotRepository.findAll();
     }
 
