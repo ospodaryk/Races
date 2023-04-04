@@ -4,6 +4,7 @@ import com.project.races.model.Pilot;
 import com.project.races.model.Race;
 import com.project.races.model.Team;
 import com.project.races.repository.RaceRepository;
+import com.project.races.repository.TeamRepository;
 import com.project.races.service.RaceService;
 import jakarta.transaction.Transactional;
 import org.hibernate.Hibernate;
@@ -19,9 +20,12 @@ public class RaceServiceImpl implements RaceService {
     private final RaceRepository raceRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(RaceServiceImpl.class);
+    private final TeamRepository teamRepository;
 
-    public RaceServiceImpl(RaceRepository raceRepository) {
+    public RaceServiceImpl(RaceRepository raceRepository,
+                           TeamRepository teamRepository) {
         this.raceRepository = raceRepository;
+        this.teamRepository = teamRepository;
     }
 
     @Override
@@ -61,6 +65,10 @@ public class RaceServiceImpl implements RaceService {
             Hibernate.initialize(race.getTeams());
         }
         return race;
+    }
+    @Override
+    public Team getByIdTeam(Long raceid,int teamid) {
+        return getById(raceid).getTeams().stream().filter(obj->obj.getStaticNumber()==teamid).findAny().get();
     }
 
     @Transactional
