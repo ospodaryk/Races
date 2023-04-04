@@ -58,7 +58,10 @@ public class TeamServiceImpl implements TeamService {
         return teamRepository.findAll().stream().filter(obj -> obj.getPilots().equals(list)).findAny().get();
 
     }
-
+    @Override
+    public List<Team> findByRaceID(int raceID) {
+        return raceService.getById(raceID).getTeams();
+    }
 
     @Transactional
     @Override

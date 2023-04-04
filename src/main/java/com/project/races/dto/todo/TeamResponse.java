@@ -10,6 +10,8 @@ import java.util.List;
 @Getter
 @Setter
 public class TeamResponse {
+    private Long staticNumber;
+
     private Long id = 0L;
     private String name;
     private Long score;

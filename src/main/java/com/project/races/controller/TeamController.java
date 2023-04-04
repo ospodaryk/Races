@@ -3,6 +3,7 @@ package com.project.races.controller;
 import com.project.races.dto.todo.TeamRequest;
 import com.project.races.dto.todo.TeamResponse;
 import com.project.races.dto.todo.TeamTransformer;
+import com.project.races.model.Pilot;
 import com.project.races.model.Race;
 import com.project.races.model.Team;
 import com.project.races.service.RaceService;
@@ -53,6 +54,12 @@ public class TeamController {
             return ResponseEntity.notFound().build();
         }
         teamService.create(team, race);
+
+
+//        var raceList = raceService.getAll();
+//        for (int i = 0; i < raceList.size(); i++) {
+//            teamService.create(team, race);
+//        }
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 

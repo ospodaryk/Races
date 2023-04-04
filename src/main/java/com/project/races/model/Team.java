@@ -21,7 +21,9 @@ public class Team  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id = 0L;
-
+//    @NotBlank
+    @Column(name = "staticNumber")
+    private Long staticNumber;
     @NotBlank
     @Column(name = "name")
     private String name;
@@ -39,4 +41,12 @@ public class Team  implements Serializable {
             joinColumns = @JoinColumn(name = "team_id"),
             inverseJoinColumns = @JoinColumn(name = "race_id"))
     private List<Race> races;
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "name='" + name + '\'' +
+                ", score=" + score +
+                '}';
+    }
 }

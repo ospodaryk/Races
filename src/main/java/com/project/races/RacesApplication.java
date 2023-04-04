@@ -3,6 +3,8 @@ package com.project.races;
 import com.project.races.dto.pilot.PilotTransformer;
 import com.project.races.dto.race.RaceTransformer;
 import com.project.races.dto.todo.TeamTransformer;
+import com.project.races.service.PilotService;
+import com.project.races.service.TeamService;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,17 +23,17 @@ public class RacesApplication {
     }
 
     @Bean
-    public PilotTransformer userTransformer(ModelMapper modelMapper) {
-        return new PilotTransformer(modelMapper);
+    public PilotTransformer userTransformer(ModelMapper modelMapper, PilotService pilotService) {
+        return new PilotTransformer(modelMapper,pilotService);
     }
 
     @Bean
-    public TeamTransformer teamTransformer(ModelMapper modelMapper) {
-        return new TeamTransformer(modelMapper);
+    public TeamTransformer teamTransformer(ModelMapper modelMapper, TeamService teamService) {
+        return new TeamTransformer(modelMapper,teamService);
     }
 
     @Bean
-    public RaceTransformer raceTransformer(ModelMapper modelMapper) {
-        return new RaceTransformer(modelMapper);
+    public RaceTransformer raceTransformer(ModelMapper modelMapper, TeamService teamService) {
+        return new RaceTransformer(modelMapper,teamService);
     }
 }

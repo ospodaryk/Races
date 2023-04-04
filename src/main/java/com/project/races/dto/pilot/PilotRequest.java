@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class PilotRequest {
+
     private String name;
 
     private String surname;

@@ -1,6 +1,7 @@
 package com.project.races.dto.race;
 
 import com.project.races.model.Race;
+import com.project.races.service.TeamService;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
@@ -9,9 +10,11 @@ import java.util.stream.Collectors;
 
 public class RaceTransformer {
     private final ModelMapper modelMapper;
+    private final TeamService teamService;
 
-    public RaceTransformer(ModelMapper modelMapper) {
+    public RaceTransformer(ModelMapper modelMapper, TeamService teamService) {
         this.modelMapper = modelMapper;
+        this.teamService = teamService;
     }
 
     public Race convertRaceRequestToRace(RaceRequest raceRequest) {

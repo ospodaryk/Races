@@ -35,9 +35,7 @@ public class PilotController {
     public List<PilotResponse> getAllPilots() {
         logger.info("@Get: getTasks()");
 
-        return pilotService.getAll().stream()
-                .map(pilotTransformer::convertPilotToPilotResponse)
-                .collect(Collectors.toList());
+        return pilotService.getAll().stream().map(pilotTransformer::convertPilotToPilotResponse).collect(Collectors.toList());
     }
 
 //    @GetMapping
@@ -49,22 +47,26 @@ public class PilotController {
 ////                .map(pilotTransformer::convertPilotToPilotResponse)
 ////                .collect(Collectors.toList());
 //    }
+@DeleteMapping
+public void deleteALL() {
+    pilotService.deleteAll();
+}
 
 
     @DeleteMapping("{task_id}/delete")
-    public void delete(
-            @PathVariable("task_id") long taskId) {
+    public void delete(@PathVariable("task_id") long taskId) {
         pilotService.delete(taskId);
         logger.info("@Delete: deleteToDo(), id=" + taskId);
     }
 
     @PostMapping("/team/{team_id}/pilot/create")
-    public ResponseEntity<HttpStatus> create(@RequestBody PilotRequest pilotRequest,
-                                             @PathVariable("team_id") long team_id) {
-
-        Team team = teamService.getById(team_id);
-        Pilot pilot = pilotTransformer.convertPilotRequestToPilot(pilotRequest, team);
-        pilotService.create(pilot);
+    public ResponseEntity<HttpStatus> create(@RequestBody PilotRequest pilotRequest, @PathVariable("team_id") long team_id) {
+//
+        var teamList = teamService.getAll().stream().filter(obj -> obj.getStaticNumber().equals(team_id)).collect(Collectors.toList());
+        for (int i = 0; i < teamList.size(); i++) {
+            Pilot pilot = pilotTransformer.convertPilotRequestToPilot(pilotRequest, teamList.get(i));
+            pilotService.create(pilot);
+        }
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 

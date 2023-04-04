@@ -21,6 +21,10 @@ public class Pilot  implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
+//    @NotBlank
+    @Column(name = "staticNumber")
+    private Long staticNumber;
+
     @NotBlank
     @Column(name = "name")
     private String name;
@@ -43,5 +47,10 @@ public class Pilot  implements Serializable {
     @JoinColumn(name = "team_id")
     private Team team;
 
-
+    @Override
+    public String toString() {
+        return "Pilot{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

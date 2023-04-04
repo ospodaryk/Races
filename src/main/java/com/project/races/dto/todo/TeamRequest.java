@@ -6,5 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TeamRequest {
+    private Long staticNumber;
     private String name;
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class PilotResponse {
     private Long id;
+    private Long staticNumber;
 
     private String name;
 

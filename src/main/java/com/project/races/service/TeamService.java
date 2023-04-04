@@ -11,6 +11,8 @@ public interface TeamService {
 
     void create(Team team, Race race);
 
+    List<Team> findByRaceID(int raceID);
+
     Team create(Team race);
 
     Team getById(long id);

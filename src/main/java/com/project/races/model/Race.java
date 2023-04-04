@@ -23,6 +23,7 @@ public class Race  implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
+
     @NotBlank
     @Column(name = "name")
     private String name;
@@ -51,7 +52,8 @@ public class Race  implements Serializable {
     @Override
     public String toString() {
         return "Race{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 '}';
     }
 }
