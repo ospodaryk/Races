@@ -18,30 +18,26 @@ import java.util.List;
 @Service
 public class RaceServiceImpl implements RaceService {
     private final RaceRepository raceRepository;
-
     private static final Logger logger = LoggerFactory.getLogger(RaceServiceImpl.class);
-    private final TeamRepository teamRepository;
 
-    public RaceServiceImpl(RaceRepository raceRepository,
-                           TeamRepository teamRepository) {
+    public RaceServiceImpl(RaceRepository raceRepository) {
         this.raceRepository = raceRepository;
-        this.teamRepository = teamRepository;
     }
 
     @Override
-    public Race create(Race recipe) {
-        if (recipe != null) {
-            logger.info("Recipe create success");
-            return raceRepository.save(recipe);
+    public Race create(Race race) {
+        if (race != null) {
+            logger.info("Race create success");
+            return raceRepository.save(race);
         }
-        logger.error("Recipe  cannot 'null'");
+        logger.error("Race  cannot 'null'");
         return null;
     }
 
 
     @Override
     public void deleteAll() {
-        logger.info("Delete all recipes");
+        logger.info("Delete all Races");
         raceRepository.findAll().forEach(obj -> delete(obj.getId()));
     }
 
@@ -58,10 +54,9 @@ public class RaceServiceImpl implements RaceService {
     @Transactional
     @Override
     public Race getById(long id) {
-        logger.info("Read recipe by ID=" + id);
+        logger.info("Read Race by ID=" + id);
         Race race = raceRepository.findById(id).orElse(null);
         if (race != null) {
-            // Initialize the lazy-loaded collection
             Hibernate.initialize(race.getTeams());
         }
         return race;
@@ -82,23 +77,23 @@ public class RaceServiceImpl implements RaceService {
     public Race update(Race recipe) {
         if (recipe != null) {
             getById(recipe.getId());
-            logger.info("Updated recipe " + recipe);
+            logger.info("Updated Race " + recipe);
             return raceRepository.save(recipe);
         }
-        logger.error("Recipe to update cannot be 'null'");
+        logger.error("Race to update cannot be 'null'");
         return null;
     }
 
     @Override
     public void delete(long id) {
         Race recipe = getById(id);
-        logger.info("Delete recipe by ID=" + id);
+        logger.info("Delete Race by ID=" + id);
         raceRepository.delete(recipe);
     }
 
     @Override
     public List<Race> getAll() {
-        logger.info("Get all Recipes");
+        logger.info("Get all Races");
         return raceRepository.findAll();
     }
 
